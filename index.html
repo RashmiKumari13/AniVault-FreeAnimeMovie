@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="AniVault - Free Anime Movies Download Hub. Browse & download thousands of anime movies for free. No login required.">
+    <meta name="keywords" content="anime, anime movies, download anime, free anime, watch anime">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AniVault – Free Anime Movies & Downloads</title>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="css/anime-custom.css" type="text/css">
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="av-header" id="mainHeader">
+        <div class="av-header__inner">
+            <a href="./index.html" class="av-logo">
+                <span class="av-logo__icon">▶</span>
+                <span class="av-logo__text">Ani<span>Vault</span></span>
+            </a>
+
+            <nav class="av-nav" id="avNav">
+                <ul>
+                    <li class="active"><a href="./index.html">Home</a></li>
+                    <li><a href="#trending-section">Trending</a></li>
+                    <li><a href="#movies-section">Movies</a></li>
+                    <li><a href="#top-rated-section">Top Rated</a></li>
+                    <li><a href="#genres-section">Genres</a></li>
+                </ul>
+            </nav>
+
+            <div class="av-header__actions">
+                <div class="av-search-bar" id="headerSearchBar">
+                    <input type="text" id="headerSearchInput" placeholder="Search anime..." autocomplete="off">
+                    <button id="headerSearchBtn"><i class="fa fa-search"></i></button>
+                </div>
+                <span class="av-free-badge">100% FREE</span>
+                <button class="av-hamburger" id="hamburger" aria-label="Toggle menu">
+                    <span></span><span></span><span></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Nav -->
+        <div class="av-mobile-nav" id="mobileNav">
+            <ul>
+                <li><a href="./index.html">Home</a></li>
+                <li><a href="#trending-section">Trending</a></li>
+                <li><a href="#movies-section">Movies</a></li>
+                <li><a href="#top-rated-section">Top Rated</a></li>
+                <li><a href="#genres-section">Genres</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="av-hero" id="heroSection">
+        <div class="av-hero__bg" id="heroBg"></div>
+        <div class="av-hero__overlay"></div>
+        <div class="av-hero__content" id="heroContent">
+            <div class="av-hero__badge" id="heroBadge">🎌 Featured Movie</div>
+            <h1 class="av-hero__title" id="heroTitle">Loading...</h1>
+            <div class="av-hero__meta" id="heroMeta"></div>
+            <p class="av-hero__synopsis" id="heroSynopsis">Fetching the best anime movies for you...</p>
+            <div class="av-hero__actions">
+                <button class="av-btn av-btn--primary" id="heroDownloadBtn" onclick="void(0)">
+                    <i class="fa fa-download"></i> Download Free
+                </button>
+                <button class="av-btn av-btn--secondary" id="heroDetailsBtn">
+                    <i class="fa fa-info-circle"></i> More Info
+                </button>
+            </div>
+        </div>
+        <div class="av-hero__dots" id="heroDots"></div>
+        <div class="av-hero__nav">
+            <button class="av-hero__prev" id="heroPrev">&#8249;</button>
+            <button class="av-hero__next" id="heroNext">&#8250;</button>
+        </div>
+    </section>
+
+    <!-- Search Results Section (hidden by default) -->
+    <section class="av-section" id="searchResultsSection" style="display:none;">
+        <div class="av-container">
+            <div class="av-section__header">
+                <h2 class="av-section__title">Search Results <span id="searchQuery"></span></h2>
+                <button class="av-btn av-btn--ghost" onclick="clearSearch()"><i class="fa fa-times"></i> Clear</button>
+            </div>
+            <div class="av-grid" id="searchResultsGrid"></div>
+            <div class="av-load-more" id="searchLoadMore" style="display:none;">
+                <button class="av-btn av-btn--outline" onclick="loadMoreSearch()">Load More Results</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trending Anime Movies Section -->
+    <section class="av-section" id="trending-section">
+        <div class="av-container">
+            <div class="av-section__header">
+                <h2 class="av-section__title"><span class="av-section__accent">🔥</span> Trending Anime Movies</h2>
+                <a href="#movies-section" class="av-view-all">View All <i class="fa fa-angle-right"></i></a>
+            </div>
+            <div class="av-grid" id="trendingGrid">
+                <!-- Filled by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Top Rated Movies -->
+    <section class="av-section av-section--alt" id="top-rated-section">
+        <div class="av-container">
+            <div class="av-section__header">
+                <h2 class="av-section__title"><span class="av-section__accent">⭐</span> Top Rated Anime Movies</h2>
+                <div class="av-filter-tabs" id="topRatedFilters">
+                    <button class="av-filter-tab active" data-filter="all">All Time</button>
+                    <button class="av-filter-tab" data-filter="2024">2024</button>
+                    <button class="av-filter-tab" data-filter="2023">2023</button>
+                    <button class="av-filter-tab" data-filter="2022">2022</button>
+                </div>
+            </div>
+            <div class="av-grid" id="topRatedGrid"></div>
+            <div class="av-load-more">
+                <button class="av-btn av-btn--outline" id="loadMoreTopRated">Load More <i class="fa fa-chevron-down"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- All Anime Movies (Browse All) -->
+    <section class="av-section" id="movies-section">
+        <div class="av-container">
+            <div class="av-section__header">
+                <h2 class="av-section__title"><span class="av-section__accent">🎬</span> All Anime Movies</h2>
+                <div class="av-sort-bar">
+                    <select id="movieSort" onchange="changeMovieSort()">
+                        <option value="bypopularity">Most Popular</option>
+                        <option value="byvotecount">Most Voted</option>
+                        <option value="score">Highest Score</option>
+                        <option value="title">Title A–Z</option>
+                        <option value="rank">Top Ranked</option>
+                    </select>
+                </div>
+            </div>
+            <div class="av-grid" id="allMoviesGrid"></div>
+            <div class="av-load-more">
+                <button class="av-btn av-btn--outline" id="loadMoreMovies">Load More <i class="fa fa-chevron-down"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Genres Section -->
+    <section class="av-section av-section--alt" id="genres-section">
+        <div class="av-container">
+            <div class="av-section__header">
+                <h2 class="av-section__title"><span class="av-section__accent">🎭</span> Browse by Genre</h2>
+            </div>
+            <div class="av-genres-grid" id="genresGrid">
+                <button class="av-genre-card" onclick="searchByGenre(1,'Action')">⚔️ Action</button>
+                <button class="av-genre-card" onclick="searchByGenre(2,'Adventure')">🗺️ Adventure</button>
+                <button class="av-genre-card" onclick="searchByGenre(4,'Comedy')">😂 Comedy</button>
+                <button class="av-genre-card" onclick="searchByGenre(8,'Drama')">🎭 Drama</button>
+                <button class="av-genre-card" onclick="searchByGenre(10,'Fantasy')">🧙 Fantasy</button>
+                <button class="av-genre-card" onclick="searchByGenre(14,'Horror')">👻 Horror</button>
+                <button class="av-genre-card" onclick="searchByGenre(7,'Mystery')">🔍 Mystery</button>
+                <button class="av-genre-card" onclick="searchByGenre(22,'Romance')">💕 Romance</button>
+                <button class="av-genre-card" onclick="searchByGenre(24,'Sci-Fi')">🚀 Sci-Fi</button>
+                <button class="av-genre-card" onclick="searchByGenre(37,'Supernatural')">✨ Supernatural</button>
+                <button class="av-genre-card" onclick="searchByGenre(36,'Slice of Life')">🌿 Slice of Life</button>
+                <button class="av-genre-card" onclick="searchByGenre(27,'Shounen')">💪 Shounen</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Studio Ghibli Spotlight -->
+    <section class="av-section av-spotlight-section">
+        <div class="av-container">
+            <div class="av-section__header">
+                <h2 class="av-section__title"><span class="av-section__accent">🌸</span> Studio Spotlight: Ghibli</h2>
+            </div>
+            <div class="av-grid" id="ghibliGrid"></div>
+        </div>
+    </section>
+
+    <!-- Download Modal -->
+    <div class="av-modal-overlay" id="downloadModal">
+        <div class="av-modal">
+            <button class="av-modal__close" onclick="closeModal()">&times;</button>
+            <div class="av-modal__poster" id="modalPoster"></div>
+            <div class="av-modal__body">
+                <div class="av-modal__badges" id="modalBadges"></div>
+                <h2 class="av-modal__title" id="modalTitle">Anime Title</h2>
+                <div class="av-modal__meta" id="modalMeta"></div>
+                <p class="av-modal__synopsis" id="modalSynopsis"></p>
+                <div class="av-modal__download-section">
+                    <h3><i class="fa fa-download"></i> Free Download Links</h3>
+                    <p class="av-modal__disclaimer">⚡ No login required • Free to download • Multiple quality options</p>
+                    <div class="av-download-links" id="downloadLinks">
+                        <div class="av-download-loading"><i class="fa fa-spinner fa-spin"></i> Searching download sources...</div>
+                    </div>
+                </div>
+                <div class="av-modal__stream-section">
+                    <h3><i class="fa fa-play-circle"></i> Watch Online (External)</h3>
+                    <div class="av-stream-links" id="streamLinks"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="av-toast" id="avToast"></div>
+
+    <!-- Footer -->
+    <footer class="av-footer">
+        <div class="av-footer__top">
+            <div class="av-container">
+                <div class="av-footer__grid">
+                    <div class="av-footer__brand">
+                        <a href="./index.html" class="av-logo">
+                            <span class="av-logo__icon">▶</span>
+                            <span class="av-logo__text">Ani<span>Vault</span></span>
+                        </a>
+                        <p>Your free gateway to thousands of anime movies. No login, no signup, just pure anime.</p>
+                        <div class="av-footer__badges">
+                            <span class="av-badge">🆓 100% Free</span>
+                            <span class="av-badge">🔒 No Login</span>
+                            <span class="av-badge">⚡ Fast Links</span>
+                        </div>
+                    </div>
+                    <div class="av-footer__links">
+                        <h4>Browse</h4>
+                        <ul>
+                            <li><a href="#trending-section">Trending Movies</a></li>
+                            <li><a href="#top-rated-section">Top Rated</a></li>
+                            <li><a href="#movies-section">All Movies</a></li>
+                            <li><a href="#genres-section">By Genre</a></li>
+                        </ul>
+                    </div>
+                    <div class="av-footer__links">
+                        <h4>Download Sources</h4>
+                        <ul>
+                            <li><a href="https://nyaa.si" target="_blank" rel="noopener">Nyaa.si (Torrents)</a></li>
+                            <li><a href="https://animekayo.com" target="_blank" rel="noopener">AnimeKayo</a></li>
+                            <li><a href="https://gogoanime.hu" target="_blank" rel="noopener">GogoAnime</a></li>
+                            <li><a href="https://animedrive.hu" target="_blank" rel="noopener">AnimeDrive</a></li>
+                        </ul>
+                    </div>
+                    <div class="av-footer__links">
+                        <h4>API Credits</h4>
+                        <ul>
+                            <li><a href="https://jikan.moe" target="_blank" rel="noopener">Jikan API</a></li>
+                            <li><a href="https://myanimelist.net" target="_blank" rel="noopener">MyAnimeList</a></li>
+                            <li><a href="https://anilist.co" target="_blank" rel="noopener">AniList</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="av-footer__bottom">
+            <div class="av-container">
+                <p>© <script>document.write(new Date().getFullYear());</script> AniVault. Data powered by <a href="https://jikan.moe" target="_blank">Jikan API</a> & MyAnimeList. For educational purposes only.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top -->
+    <button class="av-scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        <i class="fa fa-angle-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/anime-app.js"></script>
+</body>
+
+</html>
